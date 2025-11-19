@@ -28,7 +28,7 @@ This setup helps understand real‑world multi‑region architecture and cross�
 
 ## 🗺️ Architecture
 
-### **Region A – Asia Pacific (Singapore) (ap-southeast-1)
+### Region A – Asia Pacific (Singapore) (ap-southeast-1)
 
 * **VPC-A:** `10.0.0.0/16`
 * **Subnet-A:** `10.0.0.0/17`
