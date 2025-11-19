@@ -1,8 +1,6 @@
 # aws-cross-region-vpc-peering
 
-# Cross-Region VPC Peering Setup
-
-## 📝 Project Summary (Human‑Style)
+## 📝 Project Summary 
 
 This project is a practical, hands-on implementation of **cross-region VPC peering** between two AWS regions — **Singapore** and **Ireland**. I created two separate VPCs with their own subnets, route tables, and internet gateways. After setting up the network environments in both regions, I initiated a peering request from the Singapore VPC to the Ireland VPC and accepted it from the other side.
 
@@ -22,7 +20,7 @@ This project sets up:
 * **Subnets** inside each VPC
 * **EC2 instances** for testing connectivity
 * A **VPC Peering Connection** to allow private traffic between VPCs
-* Updated **Route Tables** and **Security Group Rules** to enable ping/SSH
+* Updated **Route Tables** to enable ping
 
 This setup helps understand real‑world multi‑region architecture and cross‑region networking on AWS.
 
@@ -40,8 +38,7 @@ This setup helps understand real‑world multi‑region architecture and cross�
 
 * **VPC-B:** `172.16.0.0/16`
 * **Subnet-B:** `172.16.0.0/17`
-* **EC2-B:** Private IP `172.16.88.161`:** Private IP `172.16.1.20`
-
+* **EC2-B:** Private IP `172.16.88.161`
 A **VPC Peering Connection** is created between **VPC-A ↔ VPC-B**, allowing both EC2 instances to communicate privately.
 
 ---
@@ -112,8 +109,8 @@ If peering and routes are correct, the ping will succeed.
 
 ## 📦 Repository Contains
 
-* `README.md` — High-level explanation (this file)
-* `docs/` — Full step-by-step explanation with snapshot placeholders (optional)
+* `README.md` — this file
+* `docs/` — Full step-by-step explanation with snapshot placeholders 
 * Architecture diagram
 
 ---
@@ -135,12 +132,4 @@ This repository is for educational purposes. Feel free to fork, modify, and reus
 
 ---
 
-## 🙋 Need the full documentation file?
-
-I can generate:
-✔ Full step‑by‑step documentation
-✔ With snapshot sections
-✔ With diagram included
-
-Just tell me: **“Generate full documentation.”**
 
