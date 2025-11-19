@@ -1,89 +1,146 @@
 # aws-cross-region-vpc-peering
-This small project shows how two EC2 instances, running in two different AWS regions, can talk to each other privately using VPC Peering.
-The idea is to prove that even when instances are in separate regions, they can still communicate through their private IPs without using the internet.
 
-What the Setup Looks Like
-Region A – ap-south-1 (Mumbai)
+# Cross-Region VPC Peering Setup
 
-VPC-A
+## 📝 Project Summary (Human‑Style)
 
-CIDR: 10.0.0.0/16
+This project is a practical, hands-on implementation of **cross-region VPC peering** between two AWS regions — **Singapore** and **Ireland**. I created two separate VPCs with their own subnets, route tables, and internet gateways. After setting up the network environments in both regions, I initiated a peering request from the Singapore VPC to the Ireland VPC and accepted it from the other side.
 
-Subnet-A
+Once the peering connection was established, I updated the route tables in both VPCs to allow private traffic to flow between them. Then, I launched EC2 instances inside each subnet and tested connectivity using their **private IP addresses**. Successful ping responses confirmed that both instances could communicate securely across regions without using the public internet.
 
-10.0.1.0/24
+This project helped me clearly understand AWS networking concepts such as **CIDR planning, route propagation, security group rules, and inter-region communication**, making it a strong foundational networking exercise.
 
-EC2-A
+A simple, clean, and beginner‑friendly documentation of setting up **Cross‑Region VPC Peering** between two VPCs in different AWS regions. This project demonstrates how to enable secure private communication between EC2 instances across regions using VPC peering.
 
-Private IP: 10.0.1.10
+---
 
-This is the instance we use to ping the other region.
+## 🚀 Project Overview
 
-Region B – us-east-1 (N. Virginia)
+This project sets up:
 
-VPC-B
+* **Two VPCs in different AWS regions**
+* **Subnets** inside each VPC
+* **EC2 instances** for testing connectivity
+* A **VPC Peering Connection** to allow private traffic between VPCs
+* Updated **Route Tables** and **Security Group Rules** to enable ping/SSH
 
-CIDR: 172.16.0.0/16
+This setup helps understand real‑world multi‑region architecture and cross‑region networking on AWS.
 
-Subnet-B
+---
 
-172.16.1.0/24
+## 🗺️ Architecture
 
-EC2-B
+### **Region A – Asia Pacific (Singapore) (ap-southeast-1)
 
-Private IP: 172.16.1.20
+* **VPC-A:** `10.0.0.0/16`
+* **Subnet-A:** `10.0.0.0/17`
+* **EC2-A:** Private IP `10.0.63.38`
 
-Connection Between Regions
+### **Region B – Europe (Ireland) (eu-west-1)**
 
-A VPC Peering Connection is created between VPC-A and VPC-B.
+* **VPC-B:** `172.16.0.0/16`
+* **Subnet-B:** `172.16.0.0/17`
+* **EC2-B:** Private IP `172.16.88.161`:** Private IP `172.16.1.20`
 
-Route tables are updated on both sides so the private networks can reach each other.
+A **VPC Peering Connection** is created between **VPC-A ↔ VPC-B**, allowing both EC2 instances to communicate privately.
 
-What This Demo Shows
+---
 
-Once the peering is active and routing is correct:
+## 🧰 Prerequisites
 
-EC2 in Region A can ping EC2 in Region B using private IP
+Before starting, ensure you have:
 
-EC2 in Region B can ping EC2 in Region A using private IP
+* An **AWS account**
+* Permission to create VPCs, EC2, and networking components
+* Basic understanding of AWS console navigation
+* SSH key pair for EC2 access
 
-No internet gateway, no NAT, no VPN — just private network connectivity.
+---
 
-This confirms the peering is successfully established.
+## 🛠️ Setup Steps (Short Version)
 
-Why This Is Useful
+### **1. Create VPCs**
 
-This setup is helpful for:
+* VPC-A in ap-south-1 → `10.0.0.0/16`
+* VPC-B in us-east-1 → `172.16.0.0/16`
 
-Multi-region architectures
+### **2. Create Subnets**
 
-Database replication across regions
+* Subnet-A → `10.0.1.0/24`
+* Subnet-B → `172.16.1.0/24`
 
-Private communication without exposing anything to the internet
+### **3. Launch EC2 instances**
 
-Testing connectivity between different CIDR blocks
+* EC2-A in Subnet-A → private IP `10.0.1.10`
+* EC2-B in Subnet-B → private IP `172.16.1.20`
 
-Files Included
+### **4. Create VPC Peering Connection**
 
-architecture-diagram.png
-A simple diagram showing both regions, VPCs, subnets, and EC2 instances.
+* Requester: VPC-A
+* Accepter: VPC-B
+* Accept the peering connection from VPC-B side
 
-steps.md
-The step-by-step guide on how to create the entire setup.
+### **5. Update Route Tables**
 
-ping-test-results.png
-Screenshot showing EC2-A pinging EC2-B and vice versa.
+* VPC-A RT → add route `172.16.0.0/16 → pcx-xxxx`
+* VPC-B RT → add route `10.0.0.0/16 → pcx-xxxx`
 
-How to Use This Repository
+### **6. Update Security Groups**
 
-Open the steps.md file and follow each step in order.
+Allow ICMP/SSH **from the peer VPC CIDR**.
 
-Deploy both VPCs, subnets, and EC2s.
+* On EC2-A SG → allow from `172.16.0.0/16`
+* On EC2-B SG → allow from `10.0.0.0/16`
 
-Create the peering connection.
+### **7. Test Connectivity**
 
-Update the route tables.
+SSH into EC2-A and run:
 
-Use SSH to connect to both EC2s and run ping tests.
+```
+ping 172.16.1.20
+```
 
-That's all — once both instances respond over private IPs, the configuration is working.
+SSH into EC2-B and run:
+
+```
+ping 10.0.1.10
+```
+
+If peering and routes are correct, the ping will succeed.
+
+---
+
+## 📦 Repository Contains
+
+* `README.md` — High-level explanation (this file)
+* `docs/` — Full step-by-step explanation with snapshot placeholders (optional)
+* Architecture diagram
+
+---
+
+## 🎯 Learning Outcomes
+
+By completing this project, you will understand:
+
+* How VPC routing works
+* Cross‑region VPC Peering architecture
+* How security groups and routes enable communication
+* How EC2 instances communicate privately across regions
+
+---
+
+## 📘 License
+
+This repository is for educational purposes. Feel free to fork, modify, and reuse.
+
+---
+
+## 🙋 Need the full documentation file?
+
+I can generate:
+✔ Full step‑by‑step documentation
+✔ With snapshot sections
+✔ With diagram included
+
+Just tell me: **“Generate full documentation.”**
+
