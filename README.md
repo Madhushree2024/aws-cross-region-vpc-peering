@@ -110,7 +110,7 @@ If peering and routes are correct, the ping will succeed.
 ## 📦 Repository Contains
 
 * `README.md` — this file
-* `docs/` — Full step-by-step explanation with snapshot placeholders 
+* `pdf doc` — Full step-by-step explanation with snapshot placeholders 
 * Architecture diagram
 
 ---
