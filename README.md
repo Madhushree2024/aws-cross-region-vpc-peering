@@ -109,11 +109,11 @@ If peering and routes are correct, the ping will succeed.
 
 ## 📦 Repository Contains
 
-*'README.md' — Main documentation with setup instructions and overview
+README.md — Main documentation with setup instructions and overview
 
-*'PDF Document' — Full step-by-step explanation including snapshot placeholders
+PDF Document — Full step-by-step explanation including snapshot placeholders
 
-*Architecture Diagram — Visual representation of the system/workflow for GitHub
+Architecture Diagram — Visual representation of the system/workflow for GitHub
 
 ---
 
